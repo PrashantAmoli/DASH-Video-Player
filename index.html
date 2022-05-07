@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta
+			name="viewport"
+			content="width=
+    , initial-scale=1.0"
+		/>
+		<link rel="stylesheet" href="./dash.js-development/contrib/akamai/controlbar/controlbar.css" />
+		<link rel="stylesheet" href="./styles/index.css" />
+
+		<!-- <script src="./scripts/index.js" defer></script> -->
+		<script src="./scripts/dash.all.min.js" defer></script>
+		<script src="./dash.js-development/contrib/akamai/controlbar/ControlBar.js" defer></script>
+		<script src="./scripts/dash.js" defer></script>
+
+		<title>DASH Video Player</title>
+		<link
+			rel="stylesheet"
+			href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css"
+		/>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+		<style class="redeviation-bs-style" data-name="content">
+			body > div#redeviation-bs-indicator > div {
+				opacity: 0;
+				pointer-events: none;
+			}
+			body > iframe#redeviation-bs-sidebar.redeviation-bs-visible,
+			body > iframe#redeviation-bs-overlay.redeviation-bs-visible {
+				opacity: 1;
+				pointer-events: auto;
+			}
+			body.redeviation-bs-noscroll {
+				overflow: hidden !important;
+			}
+			body > div#redeviation-bs-indicator > div {
+				position: absolute;
+				transform: translate3d(-24px, 0, 0);
+				top: 0;
+				left: 0;
+				width: 24px !important;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.5);
+				border-radius: 0 10px 10px 0;
+				transition: opacity 0.3s, transform 0.3s;
+				z-index: 2;
+			}
+			body > div#redeviation-bs-indicator > div > span {
+				-webkit-mask: no-repeat center/24px;
+				-webkit-mask-image: url(chrome-extension://jdbnofccmhefkmjbkkdkfiicjkgofkdh/img/icon-bookmark.svg);
+				background-color: #ffffff;
+				position: absolute;
+				display: block;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+			}
+			body > div#redeviation-bs-indicator[data-pos='right'] {
+				left: auto;
+				right: 0;
+			}
+			body > div#redeviation-bs-indicator[data-pos='right'] > div {
+				transform: translate3d(24px, 0, 0);
+				left: auto;
+				right: 0;
+				border-radius: 10px 0 0 10px;
+			}
+			body > div#redeviation-bs-indicator.redeviation-bs-fullHeight > div {
+				border-radius: 0;
+			}
+			body > div#redeviation-bs-indicator.redeviation-bs-hover > div {
+				transform: translate3d(0, 0, 0);
+				opacity: 1;
+			}
+			body > div#redeviation-bs-indicator[data-pos='left'].redeviation-bs-has-lsb {
+				height: 100% !important;
+				top: 0 !important;
+			}
+			body > div#redeviation-bs-indicator[data-pos='left'].redeviation-bs-has-lsb > div {
+				background: transparent;
+			}
+			body > div#redeviation-bs-indicator[data-pos='left'].redeviation-bs-has-lsb > div > span {
+				-webkit-mask-position-y: 20px;
+			}
+			body > iframe#redeviation-bs-sidebar {
+				width: 330px;
+				max-width: none;
+				height: 0;
+				z-index: 2147483646;
+				background-color: rgba(31, 36, 73, 0.4) !important;
+				color-scheme: normal !important;
+				speak: none;
+				border: none;
+				display: block !important;
+				transform: translate3d(-330px, 0, 0);
+				transition: width 0s 0.3s, height 0s 0.3s, opacity 0.3s, transform 0.3s;
+			}
+			body > iframe#redeviation-bs-sidebar[data-pos='right'] {
+				left: auto;
+				right: 0;
+				transform: translate3d(330px, 0, 0);
+			}
+			body > iframe#redeviation-bs-sidebar.redeviation-bs-visible {
+				width: calc(100% + 330px);
+				height: 100%;
+				transform: translate3d(0, 0, 0);
+				transition: opacity 0.3s, transform 0.3s;
+			}
+			body > iframe#redeviation-bs-sidebar.redeviation-bs-hideMask {
+				background: none !important;
+			}
+			body > iframe#redeviation-bs-sidebar.redeviation-bs-hideMask:not(.redeviation-bs-hover) {
+				width: calc(330px + 50px);
+			}
+			body > iframe#redeviation-bs-overlay {
+				width: 100%;
+				max-width: none;
+				height: 100%;
+				z-index: 2147483647;
+				border: none;
+				speak: none;
+				background: rgba(10, 12, 30, 0.87) !important;
+				transition: opacity 0.3s;
+			}
+		</style>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+	</head>
+	<body>
+		<h1>DASH Video Player</h1>
+
+		<div class="dash-video-player">
+			<div class="videoContainer" id="videoContainer">
+				<video preload="auto" autoplay></video>
+				<div id="videoController" class="video-controller unselectable">
+					<div id="playPauseBtn" class="btn-play-pause" title="Play/Pause">
+						<span id="iconPlayPause" class="icon-play"></span>
+					</div>
+					<span id="videoTime" class="time-display">00:00:00</span>
+					<div id="fullscreenBtn" class="btn-fullscreen control-icon-layout" title="Fullscreen">
+						<span class="icon-fullscreen-enter"></span>
+					</div>
+					<div id="bitrateListBtn" class="control-icon-layout" title="Bitrate List">
+						<span class="icon-bitrate"></span>
+					</div>
+					<input
+						type="range"
+						id="volumebar"
+						class="volumebar"
+						value="1"
+						min="0"
+						max="1"
+						step=".01"
+					/>
+					<div id="muteBtn" class="btn-mute control-icon-layout" title="Mute">
+						<span id="iconMute" class="icon-mute-off"></span>
+					</div>
+					<div id="trackSwitchBtn" class="control-icon-layout" title="A/V Tracks">
+						<span class="icon-tracks"></span>
+					</div>
+					<div id="captionBtn" class="btn-caption control-icon-layout" title="Closed Caption">
+						<span class="icon-caption"></span>
+					</div>
+					<span id="videoDuration" class="duration-display">00:00:00</span>
+					<div class="seekContainer">
+						<div id="seekbar" class="seekbar seekbar-complete">
+							<div id="seekbar-buffer" class="seekbar seekbar-buffer"></div>
+							<div id="seekbar-play" class="seekbar seekbar-play"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form">
+			<button class="button" onclick="changeTheme()">Theme</button>
+			<button type="submit" class="button" onclick="init(url1)">Video 1</button>
+			<button type="submit" class="button" onclick="init(url2)">Video 2</button>
+			<button type="submit" class="button" onclick="init(url3)">Video 3</button>
+		</div>
+
+		<canvas id="myChart" style="width: 100%; max-width: 700px"></canvas>
+		<h6>X axis: Time in seconds</h6>
+		<h6>Y axis: Quality</h6>
+	</body>
+</html>

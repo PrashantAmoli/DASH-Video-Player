@@ -1,0 +1,88 @@
+:root{
+    --white-color: black;
+    --black-color: white;
+    /* --white-color: white;
+    --black-color: black; */
+}
+
+*{
+    box-sizing: border-box;
+    color: var(--black-color);
+    margin: 0;
+}    
+
+body{
+    background-color: var(--white-color);
+}
+
+h1{
+    text-align: center;
+    margin: 1rem auto;
+    color: var(--black-color);
+    background-color: var(--white-color);
+}
+.form{
+    display: flex;
+    flex-direction: row;
+    width: 95%;
+    max-width: 600px;
+    border-radius: 50px;
+    margin: 1rem auto;
+}
+
+.input-box{
+    margin: .5rem 0;
+    padding: 5px 3px;
+    border: 3px outset;
+    border-radius: 5px;
+}
+.input-box:hover{
+    border: 3px inset;
+}
+
+.button{
+    margin: .5rem auto;
+    padding: 3px 1px;
+    color: var(--black-color);
+    background-color: var(--white-color);
+    border: 3px outset;
+    border-radius: 10px;
+    width: 5rem;
+}
+.button:hover{
+    border: 3px inset;
+    color: red;
+    font-weight: bold;
+
+}
+
+.error-msg{
+    visibility: hidden;
+    color: tomato;
+    font-size: 1.5rem;
+}
+
+video{
+    width: 100%;
+    /* margin: 0 auto; */
+    box-shadow: 0 0 20px 12px rgb(51 51 179 / 53%);
+}
+
+.dash-video-player {
+    position: relative; /* This position relative is needed to position the menus */
+    margin: 0 auto;
+    line-height: 1;
+    width: 1000px;
+    max-width: 90%;
+}
+
+canvas{
+    margin: 1rem auto;
+    padding: 6px;
+    /* box-shadow: 0 0 20px 12px rgb(51 51 179 / 53%); */
+}
+
+h6{
+    width: 200px;
+    margin: 0 auto;
+}
